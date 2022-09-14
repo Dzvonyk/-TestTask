@@ -10,8 +10,8 @@ const App = () => {
   return (
     <BrowserRouter>
     {/* <Helmet>
-      <title>GIC Canada</title>
-      <meta name="description" content="GIC Canada Immigration Company" />
+      <title>Revenue Task</title>
+      <meta name="description" content="Revenue Task" />
     </Helmet> */}
     <Suspense
       fallback={

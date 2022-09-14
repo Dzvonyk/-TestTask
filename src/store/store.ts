@@ -1,9 +1,12 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
+import revenueSlice from './slices/revenue.slice';
+import revenueListSlice from './slices/revenueList.slice';
+// import { setupListeners } from "@reduxjs/toolkit/dist/query";
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    revenueList: revenueListSlice,
+    revenue: revenueSlice,
   },
 });
 
@@ -15,3 +18,5 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   unknown,
   Action<string>
 >;
+
+// setupListeners(store.dispatch);
