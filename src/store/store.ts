@@ -1,13 +1,9 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import revenueSlice from './slices/revenue.slice';
-import revenueListSlice from './slices/revenueList.slice';
+import { reducers } from './reducers';
 // import { setupListeners } from "@reduxjs/toolkit/dist/query";
 
 export const store = configureStore({
-  reducer: {
-    revenueList: revenueListSlice,
-    revenue: revenueSlice,
-  },
+  reducer: reducers,
 });
 
 export type AppDispatch = typeof store.dispatch;
