@@ -21,7 +21,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Redirect />} />
         <Route path="/list" element={<RevenueList />} />
-        <Route path="/item/:id" element={<Revenue />} />
+        <Route path="/item/:item_id" element={<Revenue />} />
       </Routes>
     </Suspense>
   </BrowserRouter>

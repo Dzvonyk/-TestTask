@@ -3,22 +3,93 @@ import { useParams } from "react-router-dom";
 import useRevenue from "./hooks/useRevenue";
 
 const Revenue = () => {
-  const { getRevenueHandler , revenue } = useRevenue();
-  const {id} = useParams();
+  const { getRevenueHandler, revenue } = useRevenue();
+  const { item_id } = useParams();
 
   useEffect(() => {
-    if(id){
-      getRevenueHandler(id);
+    if (item_id) {
+      getRevenueHandler(item_id);
     }
     console.log("-| getRevenueHandler  useEffect |-", revenue);
   }, []);
-  
+
+  const { id, _id, data } = revenue;
+
+  // const total = data.reduce(
+  //   (previous, current) => previous.curency + current.curency,
+  // );
+  // console.log("total", total);
+  // const euros = [29.76, 41.85, 46.5];
+  // var max_curency = data.reduce((previous, current) =>
+  //   previous.curency > current.curency ? previous : current
+  // );
+  // var min_curency = data.reduce((previous, current) =>
+  //   previous.curency > current.curency ? previous : current
+  // );
+  // const average = euros.reduce((total, amount, index, array) => {
+  //   total += amount;
+  //   if (index === array.length - 1) {
+  //     return total / array.length;
+  //   } else {
+  //     return total;
+  //   }
+  // });
+
   return (
-    <div>
-      {`${revenue.id} -|- ${revenue._id}`}
-      {revenue.data.map((data) => (
-        <div>{`${data.curency}`}</div>
-      ))}
+    <div className="px-[55px] pt-[137px]">
+      <div className="flex flex-col p-8 border border-[#E5E5E5] rounded gap-[22px]">
+        <div className="flex flex-row justify-between">
+          <div className="text-2xl font-bold text-[#333333]">Revenue</div>
+          <div className="inline-flex rounded-md shadow-sm" role="group">
+            <button
+              type="button"
+              className={`py-2 px-4 text-sm font-medium text-[#333333] 
+              opacity-70 bg-white rounded-l-lg border border-[#E5E5E5] 
+              hover:opacity-100 focus:z-10 focus:ring-0 focus:font-bold 
+              focus:opacity-100`}
+            >
+              Week
+            </button>
+            <button
+              type="button"
+              className={`py-2 px-4 text-sm font-medium text-[#333333] 
+              opacity-70 bg-white border-t border-b border-[#E5E5E5] 
+              hover:opacity-100 focus:z-10 focus:ring-0 focus:font-bold 
+              focus:opacity-100`}
+            >
+              Month
+            </button>
+            <button
+              type="button"
+              className={`py-2 px-4 text-sm font-medium text-[#333333] 
+              opacity-70 bg-white rounded-r-md border border-[#E5E5E5] 
+              hover:opacity-100 focus:z-10 focus:ring-0 focus:font-bold 
+              focus:opacity-100`}
+            >
+              Year
+            </button>
+          </div>
+        </div>
+        <div className="h-10 bg-[#007AFF54] rounded"></div>
+        <div className="flex flex-col">
+          <div className="text-xs text-[#9C9C9C]">Total</div>
+          <div className="text-2xl font-bold text-[#333333]">{`$ ${27540}`}</div>
+        </div>
+        <div className="flex flex-row gap-8">
+          <div className="flex flex-col">
+            <div className="text-xs text-[#9C9C9C]">Min</div>
+            <div className="text-2xl font-bold text-[#333333] opacity-80">{`$ ${440}`}</div>
+          </div>
+          <div className="flex flex-col">
+            <div className="text-xs text-[#9C9C9C]">Medium</div>
+            <div className="text-2xl font-bold text-[#333333] opacity-80">{`$ ${1300}`}</div>
+          </div>
+          <div className="flex flex-col">
+            <div className="text-xs text-[#9C9C9C]">Max</div>
+            <div className="text-2xl font-bold text-[#333333] opacity-80">{`$ ${4425}`}</div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
