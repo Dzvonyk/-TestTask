@@ -11,8 +11,9 @@ const RevenueList = () => {
   }, []);
   
   return (
-    <div>
-      <div>
+    <div className="px-[55px] pt-[115px]">
+      <div>input</div>
+      <div className="flex flex-col gap-2">
       {revenueList &&
         revenueList.length > 0 &&
         revenueList.map((revenue) => (
