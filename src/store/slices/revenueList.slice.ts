@@ -4,7 +4,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { GetRevenueListResponseType } from "../../types/RevenueType";
 
 const initialState: GetRevenueListResponseType[] = [
-  {   
+  {
     _id: "",
     id: "",
     isActive: false,

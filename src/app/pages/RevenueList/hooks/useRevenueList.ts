@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useActions } from "../../../../hooks/useActions";
 import { useTypedSelector } from "../../../../hooks/useTypedSelector";
 import { useGetRevenueListMutation } from "../../../../store/api/revenueList.api";
@@ -7,11 +6,6 @@ const useRevenueList = () => {
   const { revenueList } = useTypedSelector((state) => state.revenueList);
   const { setRevenueList } = useActions();
   console.log("-| revenueList |-", revenueList);
-
-//   useEffect(() => {
-//     getRevenueListHandler();
-//     console.log("-| getRevenueListHandler revenueList |-", revenueList);
-//   }, []);
 
   // api
   const [getRevenueList] = useGetRevenueListMutation();
@@ -24,9 +18,45 @@ const useRevenueList = () => {
     } catch (error) {}
   };
 
+  const sortByName = () => {
+    const sortedList = revenueList.slice(0);
+    sortedList.sort((a, b) => {
+      if (a.name < b.name) {
+        return -1;
+      } else {
+        return 1;
+      }
+    });
+    setRevenueList(sortedList);
+    console.log("-| sortByName |-", sortedList);
+  };
+  const sortByDate = () => {
+    const sortedList = revenueList.slice(0);
+    sortedList.sort(
+      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+    );
+    setRevenueList(sortedList);
+    console.log("-| sortByDate |-", sortedList);
+  };
+  const sortByState = () => {
+    const sortedList = revenueList.slice(0);
+    sortedList.sort((a) => {
+      if (a.isActive) {
+        return -1;
+      } else {
+        return 1;
+      }
+    });
+    setRevenueList(sortedList);
+    console.log("-| sortByState |-", sortedList);
+  };
+
   return {
     getRevenueListHandler,
-    revenueList
+    sortByName,
+    sortByDate,
+    sortByState,
+    revenueList,
   };
 };
 

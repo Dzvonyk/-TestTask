@@ -3,15 +3,36 @@ import RevenueCard from "./components/RevenueCard";
 import useRevenueList from "./hooks/useRevenueList";
 
 import { ReactComponent as IconSearch } from "./../../../assets/search.svg";
-
+import { ReactComponent as IconArrow } from "./../../../assets/arrow.svg";
+import { GetRevenueListResponseType } from "../../../types/RevenueType";
 
 const RevenueList = () => {
-  const { getRevenueListHandler, revenueList } = useRevenueList();
+  const {
+    getRevenueListHandler,
+    sortByName,
+    sortByDate,
+    sortByState,
+    revenueList,
+  } = useRevenueList();
+
+  const [sortActive, setSortActive] = React.useState("");
+  const [searchInput, setSearchInput] = React.useState("");
+  const [searchResults, setSearchResults] = React.useState<
+    GetRevenueListResponseType[]
+  >([]);
 
   useEffect(() => {
     getRevenueListHandler();
     console.log("-| getRevenueListHandler  useEffect |-", revenueList);
   }, []);
+
+  useEffect(() => {
+    const results = revenueList.filter((person) =>
+      person.name.toLowerCase().includes(searchInput)
+    );
+    setSearchResults(results);
+    console.log("searchInput : ", searchInput);
+  }, [searchInput, revenueList]);
 
   return (
     <div className="px-[55px] pt-[115px]">
@@ -25,20 +46,56 @@ const RevenueList = () => {
           placeholder="Search"
           type="text"
           name="search"
+          onChange={(event) => {
+            setSearchInput(event.target.value);
+          }}
         />
       </label>
 
       <div className="flex flex-col border border-[#E5E7EB] rounded-lg overflow-hidden mt-[50px]">
         <div className="flex flex-row bg-[#F9FAFB] uppercase text-xs text-[#6B7280] font-medium justify-between">
           <div className="flex flex-row w-1/2">
-            <div className="px-6 py-3 w-1/2 cursor-pointer">Name</div>
-            <div className="px-6 py-3 w-1/2 cursor-pointer">Date</div>
+            <div
+              className="flex flex-row items-center gap-2 px-6 py-3 w-1/2 cursor-pointer"
+              onClick={() => {
+                sortByName();
+                setSortActive("name");
+              }}
+            >
+              Name{" "}
+              <IconArrow
+                className={`${sortActive == "name" ? "flex" : "hidden"}`}
+              />
+            </div>
+            <div
+              className="flex flex-row items-center gap-2 px-6 py-3 w-1/2 cursor-pointer"
+              onClick={() => {
+                sortByDate();
+                setSortActive("date");
+              }}
+            >
+              Date{" "}
+              <IconArrow
+                className={`${sortActive == "date" ? "flex" : "hidden"}`}
+              />
+            </div>
           </div>
-          <div className="px-6 py-3 w-2/12 cursor-pointer">state</div>
+          <div
+            className="flex flex-row items-center gap-2 px-6 py-3 w-2/12 cursor-pointer"
+            onClick={() => {
+              sortByState();
+              setSortActive("state");
+            }}
+          >
+            state{" "}
+            <IconArrow
+              className={`${sortActive == "state" ? "flex" : "hidden"}`}
+            />
+          </div>
         </div>
-        {revenueList &&
-          revenueList.length > 0 &&
-          revenueList.map((revenue) => (
+        {searchResults &&
+          searchResults.length > 0 &&
+          searchResults.map((revenue) => (
             <RevenueCard key={revenue.id} revenue={revenue} />
           ))}
       </div>
