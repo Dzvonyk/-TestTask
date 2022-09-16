@@ -5,7 +5,6 @@ import { useGetRevenueListMutation } from "../../../../store/api/revenueList.api
 const useRevenueList = () => {
   const { revenueList } = useTypedSelector((state) => state.revenueList);
   const { setRevenueList } = useActions();
-  console.log("-| revenueList |-", revenueList);
 
   // api
   const [getRevenueList] = useGetRevenueListMutation();
