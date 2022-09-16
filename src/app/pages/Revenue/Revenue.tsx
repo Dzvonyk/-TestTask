@@ -1,8 +1,11 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import Chart from "../../components/Chart/Chart";
 import useRevenue from "./hooks/useRevenue";
 
 const Revenue = () => {
+  const [active, setActive] = React.useState("");
+
   const {
     getRevenueHandler,
     sortByWeek,
@@ -18,11 +21,15 @@ const Revenue = () => {
   const { item_id } = useParams();
 
   useEffect(() => {
+    setActive("Week")
+  }, []);
+
+  useEffect(() => {
     if (item_id) {
-      getRevenueHandler(item_id);
+      getRevenueHandler(item_id, active);
     }
     console.log("-| getRevenueHandler useEffect |-", revenue);
-  }, []);
+  }, [active]);
 
   const { id, _id, data } = revenue;
 
@@ -38,7 +45,11 @@ const Revenue = () => {
               opacity-70 bg-white rounded-l-lg border border-[#E5E5E5] 
               hover:opacity-100 focus:z-10 focus:ring-0 focus:font-bold 
               focus:opacity-100`}
-              onClick={sortByWeek}
+              onClick={() => {
+                // sortByWeek();
+                setActive("Week");
+              }}
+              autoFocus={active === "Week"}
             >
               Week
             </button>
@@ -48,7 +59,11 @@ const Revenue = () => {
               opacity-70 bg-white border-t border-b border-[#E5E5E5] 
               hover:opacity-100 focus:z-10 focus:ring-0 focus:font-bold 
               focus:opacity-100`}
-              onClick={sortByMonth}
+              onClick={() => {
+                // sortByMonth();
+                setActive("Month");
+              }}
+              autoFocus={active === "Month"}
             >
               Month
             </button>
@@ -58,13 +73,19 @@ const Revenue = () => {
               opacity-70 bg-white rounded-r-md border border-[#E5E5E5] 
               hover:opacity-100 focus:z-10 focus:ring-0 focus:font-bold 
               focus:opacity-100`}
-              onClick={sortByYear}
+              onClick={() => {
+                // sortByYear();
+                setActive("Year");
+              }}
+              autoFocus={active === "Year"}
             >
               Year
             </button>
           </div>
         </div>
-        <div className="h-10 bg-[#007AFF54] rounded"></div>
+        <div className="">
+          <Chart data={curencyList}/>
+        </div>
         <div className="flex flex-col">
           <div className="text-xs text-[#9C9C9C]">Total</div>
           <div className="text-2xl font-bold text-[#333333]">{`$ ${getTotalCurency()}`}</div>

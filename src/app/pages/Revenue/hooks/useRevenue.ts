@@ -7,18 +7,27 @@ const useRevenue = () => {
   const { revenue, curencyList } = useTypedSelector((state) => state.revenue);
   const { setRevenue, setCurencyList } = useActions();
 
-  const dateWeek = moment().subtract(1, "w");
-  const dateMonth = moment().subtract(1, "M");
-  const dateYear = moment().subtract(1, "y");
+  const dateWeek = moment("2022-06-03T16:10:13Z").subtract(1, "w");
+  const dateMonth = moment("2022-06-03T16:10:13Z").subtract(1, "M");
+  const dateYear = moment("2022-06-03T16:10:13Z").subtract(1, "y");
 
   // setCurencyList(mock);
   // api
   const [getRevenue] = useGetRevenueMutation();
 
-  const getRevenueHandler = async (id: string) => {
+  const getRevenueHandler = async (id: string, active: string) => {
     try {
       const revenue = await getRevenue(id).unwrap();
       setRevenue(revenue);
+      if(active === "Week"){
+        sortByWeek()
+      } else if (active === "Month"){
+        sortByMonth()
+      } else if (active === "Year"){
+        sortByYear()
+      } else {
+        return 0;
+      }
       console.log("-| getRevenueHandler |-", revenue);
     } catch (error) {}
   };
@@ -28,6 +37,9 @@ const useRevenue = () => {
       .filter((object) => new Date(object.date) >= dateWeek.toDate())
       .slice(0);
     // const sortedByWeek = revenue.data.slice(0);
+    sortedByWeek.sort(
+      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+    );
     setCurencyList(sortedByWeek);
     console.log("-| sortByWeek |-", sortedByWeek);
   };
@@ -36,6 +48,9 @@ const useRevenue = () => {
       .filter((object) => new Date(object.date) >= dateMonth.toDate())
       .slice(0);
     // const sortedByMonth = revenue.data.slice(0);
+    sortedByMonth.sort(
+      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+    );
     setCurencyList(sortedByMonth);
     console.log("-| sortByMonth |-", sortedByMonth);
   };
@@ -44,6 +59,9 @@ const useRevenue = () => {
       .filter((object) => new Date(object.date) >= dateYear.toDate())
       .slice(0);
     // const sortedByYear = revenue.data.slice(0);
+    sortedByYear.sort(
+      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+    );
     setCurencyList(sortedByYear);
     console.log("-| sortByYear |-", sortedByYear);
   };
