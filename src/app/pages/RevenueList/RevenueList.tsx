@@ -15,6 +15,7 @@ const RevenueList = () => {
     revenueList,
   } = useRevenueList();
 
+  const [sortDirection, setSortDirection] = React.useState(false);
   const [sortActive, setSortActive] = React.useState("");
   const [searchInput, setSearchInput] = React.useState("");
   const [searchResults, setSearchResults] = React.useState<
@@ -58,38 +59,41 @@ const RevenueList = () => {
             <div
               className="flex flex-row items-center gap-2 px-6 py-3 w-1/2 cursor-pointer"
               onClick={() => {
-                sortByName();
+                sortByName(sortDirection);
                 setSortActive("name");
+                setSortDirection(!sortDirection)
               }}
             >
               Name{" "}
               <IconArrow
-                className={`${sortActive == "name" ? "flex" : "hidden"}`}
+                className={`${sortActive == "name" ? "flex" : "hidden"} ${sortDirection == true ? "" : "rotate-180"}`}
               />
             </div>
             <div
               className="flex flex-row items-center gap-2 px-6 py-3 w-1/2 cursor-pointer"
               onClick={() => {
-                sortByDate();
+                sortByDate(sortDirection);
                 setSortActive("date");
+                setSortDirection(!sortDirection)
               }}
             >
               Date{" "}
               <IconArrow
-                className={`${sortActive == "date" ? "flex" : "hidden"}`}
+                className={`${sortActive == "date" ? "flex" : "hidden"} ${sortDirection == true ? "" : "rotate-180"}`}
               />
             </div>
           </div>
           <div
             className="flex flex-row items-center gap-2 px-6 py-3 w-2/12 cursor-pointer"
             onClick={() => {
-              sortByState();
+              sortByState(sortDirection);
               setSortActive("state");
+              setSortDirection(!sortDirection)
             }}
           >
             state{" "}
             <IconArrow
-              className={`${sortActive == "state" ? "flex" : "hidden"}`}
+              className={`${sortActive == "state" ? "flex" : "hidden"} ${sortDirection == true ? "" : "rotate-180"}`}
             />
           </div>
         </div>

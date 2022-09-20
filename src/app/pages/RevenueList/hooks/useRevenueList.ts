@@ -17,10 +17,10 @@ const useRevenueList = () => {
     } catch (error) {}
   };
 
-  const sortByName = () => {
+  const sortByName = (sortDirection: boolean) => {
     const sortedList = revenueList.slice(0);
     sortedList.sort((a, b) => {
-      if (a.name < b.name) {
+      if ((sortDirection === true && a.name < b.name)||(sortDirection === false && a.name > b.name)) {
         return -1;
       } else {
         return 1;
@@ -29,18 +29,24 @@ const useRevenueList = () => {
     setRevenueList(sortedList);
     console.log("-| sortByName |-", sortedList);
   };
-  const sortByDate = () => {
+  const sortByDate = (sortDirection: boolean) => {
     const sortedList = revenueList.slice(0);
-    sortedList.sort(
-      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
-    );
+    if(sortDirection === true){
+      sortedList.sort(
+        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+      );
+    } else {
+      sortedList.sort(
+        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+      );
+    }    
     setRevenueList(sortedList);
     console.log("-| sortByDate |-", sortedList);
   };
-  const sortByState = () => {
+  const sortByState = (sortDirection: boolean) => {
     const sortedList = revenueList.slice(0);
     sortedList.sort((a) => {
-      if (a.isActive) {
+      if ((sortDirection === true && a.isActive)||(sortDirection === false && !a.isActive)) {
         return -1;
       } else {
         return 1;
